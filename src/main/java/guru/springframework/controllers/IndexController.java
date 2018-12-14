@@ -1,5 +1,8 @@
 package guru.springframework.controllers;
 
+import guru.springframework.eventpublishers.MyCustomEventPublisher;
+import guru.springframework.events.MyCustomEvent;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -9,8 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class IndexController {
 
+    @Autowired
+    MyCustomEventPublisher myCustomEventPublisher;
+
     @RequestMapping({"/", ""})
     public String index(){
+        myCustomEventPublisher.publish(new MyCustomEvent("Index Called and While Loop started!"));
         return "index";
     }
 
